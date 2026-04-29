@@ -72,6 +72,7 @@ button {
   color:#fff;
   border:none;
   border-radius:8px;
+  cursor:pointer;
 }
 
 .success {
@@ -109,24 +110,19 @@ button {
 <input type="password" id="senha" name="senha" placeholder="Senha (mín. 4 caracteres)" required>
 </div>
 
-<!-- DISCIPLINA COM BUSCA -->
 <div class="field">
 <i class="fa fa-book"></i>
-<input type="text" id="disciplinaInput" placeholder="Digite a disciplina" required autocomplete="off">
+<input type="text" id="disciplinaInput" placeholder="Digite a disciplina" required>
 <input type="hidden" name="disciplina" id="disciplinaHidden">
 <div id="lista" class="lista"></div>
 </div>
 
-<!-- DATA LIMITADA -->
 <div class="field">
 <i class="fa fa-calendar"></i>
-<input 
-  type="date" 
-  id="data" 
-  name="data"
-  min="2026-06-08"
-  max="2026-06-12"
-  required>
+<input type="date" id="data" name="data"
+min="2026-06-08"
+max="2026-06-12"
+required>
 </div>
 
 <div class="field">
@@ -146,11 +142,8 @@ button {
 </div>
 
 <script>
-// 🔹 LISTA DE DISCIPLINAS (resumida — pode expandir se quiser)
-const disciplinas = [
-"Administração","Algoritmos","Banco de Dados","Engenharia de Software",
-"Matemática","História","Física","Química"
-];
+// 🔹 DISCIPLINAS
+const disciplinas = ["Administração","Algoritmos","Banco de Dados","Engenharia de Software","Matemática","História","Física","Química"];
 
 const input = document.getElementById("disciplinaInput");
 const lista = document.getElementById("lista");
@@ -179,7 +172,7 @@ input.addEventListener("input", () => {
   lista.style.display = "block";
 });
 
-// 🔹 ENVIO + VALIDAÇÃO
+// 🔥 ENVIO CORRETO
 document.getElementById("form").addEventListener("submit", async e => {
   e.preventDefault();
 
@@ -212,14 +205,25 @@ document.getElementById("form").addEventListener("submit", async e => {
   const formData = new FormData(e.target);
   const payload = Object.fromEntries(formData.entries());
 
-  // 🔗 COLE A URL DO GOOGLE APPS SCRIPT AQUI
-  await fetch("https://script.google.com/macros/s/AKfycbxDouiioXoYngBpDIjyahWT87hwEKA-kJeHIDRhioRT/dev", { {
-    method: "POST",
-    body: JSON.stringify(payload)
-  });
+  try {
+    const res = await fetch("COLE_SUA_URL_AQUI", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
 
-  document.getElementById("msg").innerText = "✅ Agendamento realizado com sucesso!";
-  e.target.reset();
+    const resposta = await res.text();
+    console.log("Resposta:", resposta);
+
+    document.getElementById("msg").innerText = "✅ Agendamento realizado com sucesso!";
+    e.target.reset();
+
+  } catch (erro) {
+    console.error("Erro:", erro);
+    alert("Erro ao enviar. Verifique sua conexão ou API.");
+  }
 });
 </script>
 
