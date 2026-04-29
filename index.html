@@ -206,7 +206,7 @@ document.getElementById("form").addEventListener("submit", async e => {
   const payload = Object.fromEntries(formData.entries());
 
   try {
-    const res = await fetch("COLE_SUA_URL_AQUI", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbxDouiioXoYngBpDIjyahWT87hwEKA-kJeHIDRhioRT/dev", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
