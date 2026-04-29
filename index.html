@@ -213,7 +213,7 @@ document.getElementById("form").addEventListener("submit", async e => {
   const payload = Object.fromEntries(formData.entries());
 
   // 🔗 COLE A URL DO GOOGLE APPS SCRIPT AQUI
-  await fetch("https://script.google.com/macros/s/AKfycbz2MmCjF3E2Z2p5ZaJmG-p6GzMV7UtowFvGVTL1wBXSZzow8sPVN1Hx0y_9aY-MODH_kA/exec", { {
+  await fetch("https://script.google.com/macros/s/AKfycbxDouiioXoYngBpDIjyahWT87hwEKA-kJeHIDRhioRT/dev", { {
     method: "POST",
     body: JSON.stringify(payload)
   });
