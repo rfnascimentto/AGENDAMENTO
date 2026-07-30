@@ -1,231 +1,2026 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Agendamento de Prova</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<title>
+Calculadora de Serralheria
+</title>
+
 
 <style>
-body {
-  font-family: Arial;
-  background: #f4f6f9;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+
+*{
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
 }
 
-.container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+body{
+
+margin:0;
+background:#eef2f7;
+color:#222;
+padding:15px;
+
 }
 
-h2 { text-align:center; }
 
-.field {
-  display:flex;
-  align-items:center;
-  border:1px solid #ccc;
-  border-radius:8px;
-  padding:10px;
-  margin-bottom:12px;
-  position:relative;
+.app{
+
+max-width:1200px;
+margin:auto;
+
 }
 
-.field i { margin-right:10px; }
 
-.field input, .field select {
-  border:none;
-  outline:none;
-  width:100%;
+
+header{
+
+background:#1f2937;
+color:white;
+padding:25px;
+border-radius:15px;
+text-align:center;
+margin-bottom:20px;
+
 }
 
-.lista {
-  position:absolute;
-  top:45px;
-  left:0;
-  right:0;
-  background:#fff;
-  border:1px solid #ccc;
-  max-height:150px;
-  overflow:auto;
-  display:none;
-  z-index:10;
+
+header h1{
+
+margin:0;
+font-size:32px;
+
 }
 
-.lista div {
-  padding:8px;
-  cursor:pointer;
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 5px 15px #0002;
+
 }
 
-.lista div:hover { background:#eee; }
 
-button {
-  width:100%;
-  padding:12px;
-  background:#007bff;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
+h2{
+
+color:#2563eb;
+
 }
 
-.success {
-  text-align:center;
-  margin-top:10px;
-  color:green;
+
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+
 }
+
+
+
+label{
+
+font-weight:bold;
+display:block;
+margin-bottom:5px;
+
+}
+
+
+
+input,select{
+
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:15px;
+
+}
+
+
+
+button{
+
+padding:12px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+margin:5px;
+
+}
+
+
+
+.btn{
+
+background:#2563eb;
+color:white;
+
+}
+
+
+.btn:hover{
+
+background:#1d4ed8;
+
+}
+
+
+
+.btn-green{
+
+background:#16a34a;
+color:white;
+
+}
+
+
+
+.btn-red{
+
+background:#dc2626;
+color:white;
+
+}
+
+
+
+table{
+
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+
+}
+
+
+th{
+
+background:#2563eb;
+color:white;
+padding:10px;
+
+}
+
+
+td{
+
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+
+}
+
+
+
+.resultado{
+
+background:#f8fafc;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+@media(max-width:600px){
+
+header h1{
+
+font-size:22px;
+
+}
+
+
+button{
+
+width:100%;
+
+}
+
+}
+
+
+
 </style>
+
+
 </head>
+
 
 <body>
 
-<div class="container">
-<h2>Agendamento de Prova</h2>
 
-<form id="form">
+<div class="app">
 
-<div class="field">
-<i class="fa fa-user"></i>
-<input type="text" name="nome" placeholder="Nome do aluno" required>
-</div>
 
-<div class="field">
-<i class="fa fa-graduation-cap"></i>
-<input type="text" name="curso" placeholder="Curso" required>
-</div>
+<header>
 
-<div class="field">
-<i class="fa fa-id-card"></i>
-<input type="text" name="ra" placeholder="RA" required>
-</div>
+<h1>
+🔩 Calculadora de Serralheria
+</h1>
 
-<div class="field">
-<i class="fa fa-lock"></i>
-<input type="password" id="senha" name="senha" placeholder="Senha (mín. 4 caracteres)" required>
-</div>
+<p>
+Cálculo de materiais, barras de 6 metros e orçamento
+</p>
 
-<div class="field">
-<i class="fa fa-book"></i>
-<input type="text" id="disciplinaInput" placeholder="Digite a disciplina" required>
-<input type="hidden" name="disciplina" id="disciplinaHidden">
-<div id="lista" class="lista"></div>
-</div>
+</header>
 
-<div class="field">
-<i class="fa fa-calendar"></i>
-<input type="date" id="data" name="data"
-min="2026-06-08"
-max="2026-06-12"
-required>
-</div>
 
-<div class="field">
-<i class="fa fa-clock"></i>
-<select name="turno" required>
-<option value="">Turno</option>
-<option>Manhã</option>
-<option>Tarde</option>
-<option>Noite</option>
+
+<div class="card">
+
+
+<h2>
+Dados do Projeto
+</h2>
+
+
+<div class="grid">
+
+
+<div>
+
+<label>
+Tipo de Projeto
+</label>
+
+
+<select id="projeto">
+
+
+<option>Portão</option>
+
+<option>Grade</option>
+
+<option>Lixeira</option>
+
+<option>Mesa</option>
+
+<option>Armário Industrial</option>
+
+<option>Estante</option>
+
+
 </select>
+
 </div>
 
-<button type="submit">Agendar Prova</button>
-<div id="msg" class="success"></div>
 
-</form>
+
+<div>
+
+<label>
+Largura (mm)
+</label>
+
+
+<input id="largura" type="number">
+
+
 </div>
+
+
+
+<div>
+
+<label>
+Altura (mm)
+</label>
+
+
+<input id="altura" type="number">
+
+
+</div>
+
+
+
+<div>
+
+<label>
+Profundidade (mm)
+</label>
+
+
+<input id="profundidade" type="number">
+
+
+</div>
+
+
+
+<div>
+
+<label>
+Espaçamento (mm)
+</label>
+
+
+<input id="espaco" type="number" value="120">
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Material do Esqueleto
+</h2>
+
+
+<select id="esqueleto">
+
+
+<option>Metalon 20x20</option>
+
+<option>Metalon 30x20</option>
+
+<option>Metalon 30x30</option>
+
+<option>Metalon 40x20</option>
+
+<option>Metalon 40x40</option>
+
+<option>Metalon 50x30</option>
+
+<option>Metalon 50x50</option>
+
+<option>Cantoneira 1"</option>
+
+<option>Cantoneira 1 1/2"</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Preenchimento
+</h2>
+
+
+<div class="grid">
+
+
+<select id="preenchimento">
+
+
+<option>Metalon 15x15</option>
+
+<option>Metalon 20x20</option>
+
+<option>Metalon 25x25</option>
+
+<option>Tubo 1/2"</option>
+
+<option>Tubo 3/4"</option>
+
+<option>Vergalhão 5mm</option>
+
+<option>Vergalhão 3/8"</option>
+
+<option>Vergalhão 1/2"</option>
+
+
+</select>
+
+
+
+<input id="quantidadePreenchimento"
+type="number"
+placeholder="Quantidade">
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+Configuração
+</h2>
+
+
+<div class="grid">
+
+
+<div>
+
+<label>
+Orientação
+</label>
+
+
+<select id="orientacao">
+
+<option>Vertical</option>
+
+<option>Horizontal</option>
+
+<option>Diagonal</option>
+
+
+</select>
+
+</div>
+
+
+
+<div>
+
+<label>
+Travessas extras
+</label>
+
+
+<input id="travessas" value="0" type="number">
+
+
+</div>
+
+
+<div>
+
+<label>
+Reforços
+</label>
+
+
+<input id="reforcos" value="0" type="number">
+
+
+</div>
+
+
+</div>
+
+
+</div><script>
+
+
+//======================================================
+// BANCO DE MATERIAIS
+//======================================================
+
+
+const materiais = {
+
+
+"Metalon 20x20":
+{
+peso:0.72
+},
+
+"Metalon 30x20":
+{
+peso:1.03
+},
+
+"Metalon 30x30":
+{
+peso:1.18
+},
+
+"Metalon 40x20":
+{
+peso:1.34
+},
+
+"Metalon 40x40":
+{
+peso:2.25
+},
+
+"Metalon 50x30":
+{
+peso:2.10
+},
+
+"Metalon 50x50":
+{
+peso:2.80
+},
+
+"Cantoneira 1\"":
+{
+peso:1.55
+},
+
+"Cantoneira 1 1/2\"":
+{
+peso:2.65
+},
+
+
+"Metalon 15x15":
+{
+peso:0.58
+},
+
+"Metalon 25x25":
+{
+peso:0.91
+},
+
+
+"Tubo 1/2\"":
+{
+peso:0.52
+},
+
+
+"Tubo 3/4\"":
+{
+peso:0.79
+},
+
+
+"Vergalhão 5mm":
+{
+peso:0.15
+},
+
+
+"Vergalhão 3/8\"":
+{
+peso:0.56
+},
+
+
+"Vergalhão 1/2\"":
+{
+peso:0.99
+}
+
+
+};
+
+
+
+//======================================================
+// TAMANHO DA BARRA COMERCIAL
+//======================================================
+
+
+const barraPadrao = 6000; // milímetros
+
+
+
+//======================================================
+// CONVERTER MM PARA METROS
+//======================================================
+
+
+function mmParaMetro(valor){
+
+return valor / 1000;
+
+}
+
+
+
+//======================================================
+// CALCULAR QUANTIDADE DE BARRAS
+//======================================================
+
+
+function calcularBarras(metros){
+
+
+return Math.ceil(
+
+metros / 6
+
+);
+
+
+}
+
+
+
+//======================================================
+// CALCULAR SOBRA
+//======================================================
+
+
+function calcularSobra(metros){
+
+
+let barras=
+
+calcularBarras(metros);
+
+
+
+let comprado=
+
+barras * 6;
+
+
+
+return Number(
+
+(comprado-metros).toFixed(2)
+
+);
+
+
+}
+
+
+
+//======================================================
+// CALCULAR PESO
+//======================================================
+
+
+function calcularPeso(material,metros){
+
+
+let item=
+
+materiais[material];
+
+
+
+if(!item){
+
+return 0;
+
+}
+
+
+
+return Number(
+
+(item.peso * metros).toFixed(2)
+
+);
+
+
+}
+
+
+
+//======================================================
+// CÁLCULO DO QUADRO EXTERNO
+//======================================================
+
+
+function calcularQuadro(){
+
+
+
+let largura=
+
+Number(
+
+document.getElementById("largura").value
+
+);
+
+
+
+let altura=
+
+Number(
+
+document.getElementById("altura").value
+
+);
+
+
+
+if(!largura || !altura){
+
+return 0;
+
+}
+
+
+
+// duas laterais + duas travessas
+
+let totalMM =
+
+(largura*2)
+
++
+
+(altura*2);
+
+
+
+return mmParaMetro(totalMM);
+
+
+}
+
+
+
+//======================================================
+// CÁLCULO DO PREENCHIMENTO
+//======================================================
+
+
+function calcularPreenchimento(){
+
+
+
+let largura=
+
+Number(
+
+document.getElementById("largura").value
+
+);
+
+
+
+let altura=
+
+Number(
+
+document.getElementById("altura").value
+
+);
+
+
+
+let espacamento=
+
+Number(
+
+document.getElementById("espaco").value
+
+);
+
+
+
+let orientacao=
+
+document.getElementById("orientacao").value;
+
+
+
+if(!largura || !altura){
+
+return 0;
+
+}
+
+
+
+let quantidade;
+
+
+
+let comprimento;
+
+
+
+// vertical
+
+if(orientacao=="Vertical"){
+
+
+quantidade=
+
+Math.floor(
+
+largura / espacamento
+
+);
+
+
+
+comprimento=
+
+altura;
+
+
+
+}
+
+
+
+// horizontal
+
+if(orientacao=="Horizontal"){
+
+
+quantidade=
+
+Math.floor(
+
+altura / espacamento
+
+);
+
+
+
+comprimento=
+
+largura;
+
+
+
+}
+
+
+
+// diagonal
+
+if(orientacao=="Diagonal"){
+
+
+
+quantidade=
+
+Math.floor(
+
+largura / espacamento
+
+);
+
+
+
+comprimento=
+
+Math.sqrt(
+
+Math.pow(largura,2)
+
++
+
+Math.pow(altura,2)
+
+);
+
+
+
+}
+
+
+
+return mmParaMetro(
+
+quantidade *
+
+comprimento
+
+);
+
+
+}
+
+
+
+//======================================================
+// TRAVESSAS EXTRAS
+//======================================================
+
+
+function calcularTravessas(){
+
+
+
+let largura=
+
+Number(
+
+document.getElementById("largura").value
+
+);
+
+
+
+let quantidade=
+
+Number(
+
+document.getElementById("travessas").value
+
+);
+
+
+
+return mmParaMetro(
+
+largura * quantidade
+
+);
+
+
+}
+
+
+
+//======================================================
+// REFORÇOS
+//======================================================
+
+
+function calcularReforcos(){
+
+
+
+let altura=
+
+Number(
+
+document.getElementById("altura").value
+
+);
+
+
+
+let quantidade=
+
+Number(
+
+document.getElementById("reforcos").value
+
+);
+
+
+
+return mmParaMetro(
+
+altura * quantidade
+
+);
+
+
+}
+
+
+
+//======================================================
+// CÁLCULO TOTAL DE MATERIAL
+//======================================================
+
+
+function calcularMaterialTotal(){
+
+
+
+let esqueleto=
+
+document.getElementById("esqueleto").value;
+
+
+
+let preenchimento=
+
+document.getElementById("preenchimento").value;
+
+
+
+let totalEsqueleto=
+
+calcularQuadro();
+
+
+
+let totalPreenchimento=
+
+calcularPreenchimento();
+
+
+
+let totalTravessas=
+
+calcularTravessas();
+
+
+
+let totalReforcos=
+
+calcularReforcos();
+
+
+
+let total=
+
+totalEsqueleto
+
++
+
+totalPreenchimento
+
++
+
+totalTravessas
+
++
+
+totalReforcos;
+
+
+
+let resultado={};
+
+
+
+resultado[esqueleto]=
+
+totalEsqueleto;
+
+
+
+resultado[preenchimento]=
+
+totalPreenchimento;
+
+
+
+return resultado;
+
+
+}
+
+
+
+//======================================================
+// GERAR ITEM DE MATERIAL
+//======================================================
+
+
+function gerarItemMaterial(nome,metros){
+
+
+
+return {
+
+
+material:nome,
+
+
+metros:Number(
+
+metros.toFixed(2)
+
+),
+
+
+barras:
+
+calcularBarras(metros),
+
+
+sobra:
+
+calcularSobra(metros),
+
+
+peso:
+
+calcularPeso(nome,metros)
+
+
+};
+
+
+}
+
+
+
+</script><script>
+
+
+//======================================================
+// TABELA DE PREÇOS
+//======================================================
+
+
+const precos = {
+
+
+"Metalon 20x20":45,
+
+"Metalon 30x20":60,
+
+"Metalon 30x30":75,
+
+"Metalon 40x20":85,
+
+"Metalon 40x40":120,
+
+"Metalon 50x30":110,
+
+"Metalon 50x50":160,
+
+"Cantoneira 1\"":70,
+
+"Cantoneira 1 1/2\"":120,
+
+
+"Metalon 15x15":40,
+
+"Metalon 25x25":65,
+
+
+"Tubo 1/2\"":35,
+
+"Tubo 3/4\"":50,
+
+
+"Vergalhão 5mm":25,
+
+"Vergalhão 3/8\"":55,
+
+"Vergalhão 1/2\"":90
+
+
+};
+
+
+
+//======================================================
+// CALCULAR PREÇO
+//======================================================
+
+
+function calcularPreco(material,barras){
+
+
+let valor=
+
+precos[material] || 0;
+
+
+return Number(
+
+(valor*barras).toFixed(2)
+
+);
+
+
+}
+
+
+
+//======================================================
+// LISTA FINAL DO PROJETO
+//======================================================
+
+
+let resultadoProjeto=[];
+
+
+
+//======================================================
+// FUNÇÃO PRINCIPAL CALCULAR
+//======================================================
+
+
+function calcularProjeto(){
+
+
+
+resultadoProjeto=[];
+
+
+
+let dados=
+
+calcularMaterialTotal();
+
+
+
+for(let material in dados){
+
+
+
+let metros=
+
+dados[material];
+
+
+
+if(metros>0){
+
+
+
+resultadoProjeto.push(
+
+
+gerarItemMaterial(
+
+material,
+
+metros
+
+)
+
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+mostrarResultado();
+
+
+
+}
+
+
+
+//======================================================
+// MOSTRAR RESULTADO
+//======================================================
+
+
+function mostrarResultado(){
+
+
+
+let area=
+
+document.getElementById(
+
+"resultado"
+
+);
+
+
+
+let html="";
+
+
+
+let totalPeso=0;
+
+let totalBarras=0;
+
+let totalValor=0;
+
+
+
+resultadoProjeto.forEach(item=>{
+
+
+let valor=
+
+calcularPreco(
+
+item.material,
+
+item.barras
+
+);
+
+
+
+totalPeso += item.peso;
+
+totalBarras += item.barras;
+
+totalValor += valor;
+
+
+
+html += `
+
+
+<tr>
+
+<td>
+
+${item.material}
+
+</td>
+
+
+<td>
+
+${item.metros} m
+
+</td>
+
+
+<td>
+
+${item.barras}
+
+</td>
+
+
+<td>
+
+${item.sobra} m
+
+</td>
+
+
+<td>
+
+${item.peso} kg
+
+</td>
+
+
+<td>
+
+R$ ${valor.toFixed(2)}
+
+</td>
+
+
+</tr>
+
+
+`;
+
+
+});
+
+
+
+
+document.getElementById(
+
+"tabela"
+
+).innerHTML=html;
+
+
+
+document.getElementById(
+
+"resumo"
+
+).innerHTML=
+
+
+`
+
+<h3>
+
+Resumo do Projeto
+
+</h3>
+
+
+<p>
+
+Barras de 6 metros:
+
+<b>${totalBarras}</b>
+
+</p>
+
+
+<p>
+
+Peso aproximado:
+
+<b>${totalPeso.toFixed(2)} kg</b>
+
+</p>
+
+
+<p>
+
+Material:
+
+<b>R$ ${totalValor.toFixed(2)}</b>
+
+</p>
+
+
+`;
+
+
+
+}
+
+
+
+//======================================================
+// SALVAR PROJETO
+//======================================================
+
+
+function salvarProjeto(){
+
+
+
+let nome=
+
+prompt(
+
+"Nome do projeto:"
+
+);
+
+
+
+if(!nome){
+
+return;
+
+}
+
+
+
+let projetos=
+
+JSON.parse(
+
+localStorage.getItem(
+
+"projetosSerralheria"
+
+)
+
+|| "[]"
+
+);
+
+
+
+projetos.push({
+
+
+nome:nome,
+
+
+data:
+
+new Date().toLocaleString("pt-BR"),
+
+
+dados:resultadoProjeto
+
+
+});
+
+
+
+localStorage.setItem(
+
+"projetosSerralheria",
+
+JSON.stringify(projetos)
+
+);
+
+
+
+alert(
+
+"Projeto salvo!"
+
+);
+
+
+
+}
+
+
+
+//======================================================
+// LIMPAR PROJETO
+//======================================================
+
+
+function limparProjeto(){
+
+
+
+resultadoProjeto=[];
+
+
+
+document.getElementById(
+
+"tabela"
+
+).innerHTML="";
+
+
+
+document.getElementById(
+
+"resumo"
+
+).innerHTML="";
+
+
+
+}
+
+
+
+//======================================================
+// GERAR LISTA DE CORTE
+//======================================================
+
+
+function gerarListaCorte(){
+
+
+
+let lista=
+
+document.getElementById(
+
+"corte"
+
+);
+
+
+
+let texto="";
+
+
+
+resultadoProjeto.forEach(item=>{
+
+
+texto += `
+
+
+<p>
+
+<b>${item.material}</b>
+
+<br>
+
+Cortar aproximadamente:
+
+${item.metros} metros
+
+<br>
+
+Comprar:
+
+${item.barras} barras de 6 metros
+
+<br>
+
+Sobra:
+
+${item.sobra} metros
+
+</p>
+
+
+<hr>
+
+
+`;
+
+
+});
+
+
+
+lista.innerHTML=texto;
+
+
+
+}
+
+
+
+//======================================================
+// EVENTOS DOS BOTÕES
+//======================================================
+
+
+function iniciarAplicativo(){
+
+
+
+document.getElementById(
+
+"calcular"
+
+).onclick=function(){
+
+
+calcularProjeto();
+
+
+gerarListaCorte();
+
+
+};
+
+
+
+document.getElementById(
+
+"salvar"
+
+).onclick=function(){
+
+
+salvarProjeto();
+
+
+};
+
+
+
+document.getElementById(
+
+"limpar"
+
+).onclick=function(){
+
+
+limparProjeto();
+
+
+};
+
+
+
+}
+
+
+
+window.addEventListener(
+
+"load",
+
+iniciarAplicativo
+
+);
+
+
+
+</script>
+<!-- ==========================================
+     ÁREA DE RESULTADOS
+========================================== -->
+
+
+<div class="card">
+
+
+<h2>
+📊 Resultado do Cálculo
+</h2>
+
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+Material
+</th>
+
+<th>
+Metros
+</th>
+
+<th>
+Barras 6m
+</th>
+
+<th>
+Sobra
+</th>
+
+<th>
+Peso
+</th>
+
+<th>
+Valor
+</th>
+
+
+</tr>
+
+</thead>
+
+
+<tbody id="tabela">
+
+
+</tbody>
+
+
+</table>
+
+
+
+<div id="resumo" class="resultado">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- ==========================================
+     LISTA DE CORTE
+========================================== -->
+
+
+<div class="card">
+
+
+<h2>
+✂ Lista de Corte
+</h2>
+
+
+<div id="corte" class="resultado">
+
+
+Nenhum corte calculado.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- ==========================================
+     BOTÕES
+========================================== -->
+
+
+<div class="card">
+
+
+<button 
+class="btn"
+id="calcular">
+
+🔧 Calcular Material
+
+</button>
+
+
+
+<button 
+class="btn-green"
+id="salvar">
+
+💾 Salvar Projeto
+
+</button>
+
+
+
+<button 
+class="btn-red"
+id="limpar">
+
+🗑 Novo Projeto
+
+</button>
+
+
+
+<button
+class="btn"
+onclick="window.print()">
+
+🖨 Imprimir
+
+</button>
+
+
+<button
+class="btn"
+onclick="gerarPDF()">
+
+📄 Gerar PDF
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+<!-- ==========================================
+     PDF SIMPLES
+========================================== -->
+
 
 <script>
-// 🔹 DISCIPLINAS
-const disciplinas = ["Administração","Algoritmos","Banco de Dados","Engenharia de Software","Matemática","História","Física","Química"];
 
-const input = document.getElementById("disciplinaInput");
-const lista = document.getElementById("lista");
-const hidden = document.getElementById("disciplinaHidden");
 
-input.addEventListener("input", () => {
-  const val = input.value.toLowerCase();
-  lista.innerHTML = "";
+function gerarPDF(){
 
-  if (!val) return lista.style.display="none";
 
-  disciplinas.filter(d => d.toLowerCase().includes(val))
-  .forEach(d => {
-    const div = document.createElement("div");
-    div.textContent = d;
 
-    div.onclick = () => {
-      input.value = d;
-      hidden.value = d;
-      lista.style.display = "none";
-    };
+let conteudo = `
 
-    lista.appendChild(div);
-  });
 
-  lista.style.display = "block";
+CALCULADORA DE SERRALHERIA
+
+
+Data:
+
+${new Date().toLocaleDateString("pt-BR")}
+
+
+
+`;
+
+
+
+resultadoProjeto.forEach(item=>{
+
+
+conteudo += `
+
+
+${item.material}
+
+
+Metros:
+${item.metros} m
+
+
+Barras:
+${item.barras}
+
+
+Sobra:
+${item.sobra} m
+
+
+Peso:
+${item.peso} kg
+
+
+
+`;
+
+
+
 });
 
-// 🔥 ENVIO CORRETO
-document.getElementById("form").addEventListener("submit", async e => {
-  e.preventDefault();
 
-  const senha = document.getElementById("senha").value;
-  const data = document.getElementById("data").value;
 
-  const datasPermitidas = [
-    "2026-06-08",
-    "2026-06-09",
-    "2026-06-10",
-    "2026-06-11",
-    "2026-06-12"
-  ];
+conteudo += `
 
-  if (senha.length < 4) {
-    alert("Senha deve ter pelo menos 4 caracteres");
-    return;
-  }
 
-  if (!datasPermitidas.includes(data)) {
-    alert("Escolha entre 08 e 12 de junho");
-    return;
-  }
+RESUMO
 
-  if (!hidden.value) {
-    alert("Selecione uma disciplina válida");
-    return;
-  }
 
-  const formData = new FormData(e.target);
-  const payload = Object.fromEntries(formData.entries());
+${document.getElementById("resumo").innerText}
 
-  try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbxDouiioXoYngBpDIjyahWT87hwEKA-kJeHIDRhioRT/dev", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
 
-    const resposta = await res.text();
-    console.log("Resposta:", resposta);
 
-    document.getElementById("msg").innerText = "✅ Agendamento realizado com sucesso!";
-    e.target.reset();
+`;
 
-  } catch (erro) {
-    console.error("Erro:", erro);
-    alert("Erro ao enviar. Verifique sua conexão ou API.");
-  }
-});
+
+
+let arquivo = new Blob(
+
+[conteudo],
+
+{
+
+type:"text/plain;charset=utf-8"
+
+}
+
+);
+
+
+
+let link=document.createElement("a");
+
+
+link.href=
+
+URL.createObjectURL(arquivo);
+
+
+
+link.download=
+
+"orcamento-serralheria.txt";
+
+
+
+link.click();
+
+
+
+}
+
+
+
 </script>
 
+
+
+
+
+<!-- ==========================================
+     RODAPÉ
+========================================== -->
+
+
+<div class="card">
+
+
+<center>
+
+
+<strong>
+Calculadora de Serralheria
+</strong>
+
+
+<br>
+
+
+Projeto desenvolvido para cálculo de materiais,
+cortes e orçamento.
+
+
+</center>
+
+
+</div>
+
+
+
+
+</div>
+
+
 </body>
+
+
 </html>
